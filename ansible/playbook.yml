@@ -7,9 +7,3 @@
         state: present
         update_cache: yes
       become: yes
-
-    - name: remove git
-      ansible.builtin.apt:
-        name: git
-        state: absent
-      become: yes
