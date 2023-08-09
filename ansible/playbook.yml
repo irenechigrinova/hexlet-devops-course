@@ -1,5 +1,9 @@
 - hosts: testservers
   become: yes
+  vars:
+    nginx_conf_dist: /etc/nginx/
+    nginx_html_dist: /usr/share/nginx/html/
+    nginx_port: 8080
 
   tasks:
     - name: update package cache
@@ -31,13 +35,13 @@
       tags: nginx
       ansible.builtin.copy:
         src: files/index.html
-        dest: /usr/share/nginx/html/index.html
+        dest: "{{nginx_html_dist}}/index.html"
 
     - name: copy nginx config
       tags: nginx
-      ansible.builtin.copy:
-        src: files/nginx.conf
-        dest: /etc/nginx/nginx.conf
+      ansible.builtin.template:
+        src: templates/nginx.conf.j2
+        dest: "{{nginx_conf_dist}}/nginx.conf"
       notify:
         - restart nginx
 
