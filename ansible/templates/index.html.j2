@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hello World!</title>
     <h2>This is server {{ server_name }}!</h2>
+    <h3>Deployed: {{ '%Y-%m-%d %H:%M:%S' | strftime(ansible_date_time.epoch) }}</h3>
 </head>
 <body>
 <h1>Hello World!!</h1>
