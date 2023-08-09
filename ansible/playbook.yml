@@ -17,19 +17,16 @@
         groups: unknown
         append: yes
 
-    - name: install git
+    - name: install applications
       tags: app
       ansible.builtin.apt:
-        name: git
-        state: present
+        name: "{{ item }}"
+        state: latest
         update_cache: yes
-
-    - name: install nginx
-      tags: [app, nginx]
-      ansible.builtin.apt:
-        name: nginx
-        state: present
-        update_cache: yes
+      loop:
+        - git
+        - nginx
+        - redis-server
 
     - name: copy index for nginx
       tags: nginx
