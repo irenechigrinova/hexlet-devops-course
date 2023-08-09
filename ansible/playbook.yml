@@ -3,7 +3,7 @@
   vars:
     nginx_conf_dist: /etc/nginx/
     nginx_html_dist: /usr/share/nginx/html/
-    nginx_port: 8080
+    nginx_port: 80
 
   tasks:
     - name: update package cache
