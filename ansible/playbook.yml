@@ -4,6 +4,8 @@
     nginx_conf_dist: /etc/nginx/
     nginx_html_dist: /usr/share/nginx/html/
     nginx_port: 80
+    is_some_flag: true
+    is_other_flag: false
 
   tasks:
     - name: update package cache
@@ -16,6 +18,16 @@
         name: john
         groups: unknown
         append: yes
+
+    - name: echo true
+      tags: echo
+      ansible.builtin.shell: echo "This is true"
+      when: is_some_flag
+
+    - name: echo false
+      tags: echo
+      ansible.builtin.shell: echo "This is false"
+      when: not is_other_flag
 
     - name: install applications
       tags: app
