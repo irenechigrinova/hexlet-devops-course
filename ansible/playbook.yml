@@ -30,7 +30,7 @@
       when: not is_other_flag
 
     - name: install applications
-      tags: app
+      tags: [app, cowsay]
       ansible.builtin.apt:
         name: "{{ item }}"
         state: latest
@@ -39,6 +39,12 @@
         - git
         - nginx
         - redis-server
+        - cowsay
+
+    - name: cowsay
+      tags: cowsay
+      ansible.builtin.command: cowsay "This is server server_name!"
+      register: cowsay_result
 
     - name: copy index for nginx
       tags: nginx
