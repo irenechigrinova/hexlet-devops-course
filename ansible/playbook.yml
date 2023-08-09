@@ -1,9 +1,25 @@
 - hosts: testservers
+  become: yes
 
   tasks:
+    - name: update package cache
+      ansible.builtin.apt:
+        update_cache: yes
     - name: install git
+      tags: app
       ansible.builtin.apt:
         name: git
         state: present
         update_cache: yes
-      become: yes
+    - name: install nginx
+      tags: app
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+        update_cache: yes
+    - name: create user john
+      tags: users
+      ansible.builtin.user:
+        name: john
+        groups: unknown
+        append: yes
