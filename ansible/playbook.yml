@@ -16,7 +16,6 @@
       tags: users
       ansible.builtin.user:
         name: john
-        groups: unknown
         append: yes
 
     - name: echo true
@@ -41,13 +40,9 @@
         - redis-server
         - cowsay
 
-    - name: path
-      tags: cowsay
-      ansible.builtin.shell: echo $PATH
-
     - name: cowsay
       tags: cowsay
-      ansible.builtin.shell: cowsay "This is server server_name!"
+      ansible.builtin.shell: /usr/games/cowsay {{ server_name }}
       register: cowsay_result
 
     - name: copy index for nginx

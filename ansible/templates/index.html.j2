@@ -12,6 +12,6 @@
 <h3>Deployed: {{ '%Y-%m-%d %H:%M:%S' | strftime(ansible_date_time.epoch) }}</h3>
 <br />
 
-<pre><code>{{ cowsay_result }}</code></pre>
+<pre><code>{{ cowsay_result.stdout_lines | join('\n') }}</code></pre>
 </body>
 </html>
