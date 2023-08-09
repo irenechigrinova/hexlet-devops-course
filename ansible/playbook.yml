@@ -39,6 +39,9 @@
         - redis-server
         - cowsay
 
+    - import_role:
+        name: ansible-role.nodejs
+
     - name: cowsay
       tags: cowsay
       ansible.builtin.shell: /usr/games/cowsay {{ server_name }}
