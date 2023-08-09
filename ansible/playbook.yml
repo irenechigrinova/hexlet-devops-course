@@ -33,8 +33,8 @@
 
     - name: copy index for nginx
       tags: nginx
-      ansible.builtin.copy:
-        src: files/index.html
+      ansible.builtin.template:
+        src: templates/index.html.j2
         dest: "{{nginx_html_dist}}/index.html"
 
     - name: copy nginx config
