@@ -41,8 +41,9 @@
         - redis-server
         - cowsay
 
-    - shell: cowsay {{server_name}}
+    - name: cowsay
       tags: cowsay
+      ansible.builtin.shell: cowsay "This is server server_name!"
       register: cowsay_result
 
     - name: copy index for nginx
