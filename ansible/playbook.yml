@@ -1,9 +1,6 @@
 - hosts: testservers
   become: yes
   vars:
-    nginx_conf_dist: /etc/nginx/
-    nginx_html_dist: /usr/share/nginx/html/
-    nginx_port: 80
     is_some_flag: true
     is_other_flag: false
 
@@ -36,7 +33,6 @@
         update_cache: yes
       loop:
         - git
-        - nginx
         - redis-server
         - cowsay
 
@@ -45,22 +41,5 @@
       ansible.builtin.shell: /usr/games/cowsay {{ server_name }}
       register: cowsay_result
 
-    - name: copy index for nginx
-      tags: nginx
-      ansible.builtin.template:
-        src: templates/index.html.j2
-        dest: "{{nginx_html_dist}}/index.html"
-
-    - name: copy nginx config
-      tags: nginx
-      ansible.builtin.template:
-        src: templates/nginx.conf.j2
-        dest: "{{nginx_conf_dist}}/nginx.conf"
-      notify:
-        - restart nginx
-
-  handlers:
-    - name: restart nginx
-      ansible.builtin.service:
-        name: nginx
-        state: reloaded
+    - name: Include nginx playbook
+      ansible.builtin.import_playbook: nginx.yaml
