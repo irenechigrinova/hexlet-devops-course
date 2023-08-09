@@ -3,6 +3,9 @@
   vars:
     is_some_flag: true
     is_other_flag: false
+    nginx_conf_dist: /etc/nginx/
+    nginx_html_dist: /usr/share/nginx/html/
+    nginx_port: 80
 
   tasks:
     - name: update package cache
@@ -41,5 +44,5 @@
       ansible.builtin.shell: /usr/games/cowsay {{ server_name }}
       register: cowsay_result
 
-    - name: Include nginx playbook
-      ansible.builtin.import_playbook: nginx.yaml
+- name: include nginx playbook
+  ansible.builtin.import_playbook: nginx.yml
