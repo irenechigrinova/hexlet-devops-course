@@ -5,21 +5,44 @@
     - name: update package cache
       ansible.builtin.apt:
         update_cache: yes
+
     - name: install git
       tags: app
       ansible.builtin.apt:
         name: git
         state: present
         update_cache: yes
+
     - name: install nginx
-      tags: app
+      tags: [app, nginx]
       ansible.builtin.apt:
         name: nginx
         state: present
         update_cache: yes
+
     - name: create user john
       tags: users
       ansible.builtin.user:
         name: john
         groups: unknown
         append: yes
+
+    - name: copy index for nginx
+      tags: nginx
+      ansible.builtin.copy:
+        src: files/index.html
+        dest: /usr/share/nginx/html/index.html
+
+    - name: copy nginx config
+      tags: nginx
+      ansible.builtin.copy:
+        src: files/nginx.conf
+        dest: /etc/nginx/nginx.conf
+      notify:
+        - restart nginx
+
+  handlers:
+    - name: restart nginx
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded
