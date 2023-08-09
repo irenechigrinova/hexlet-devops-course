@@ -41,6 +41,8 @@
 
     - import_role:
         name: ansible-role.nodejs
+      vars:
+        ansible_ssh_user: flame
 
     - name: cowsay
       tags: cowsay
